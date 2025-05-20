@@ -1,6 +1,6 @@
 #include "tree.h"
 #include <stdlib.h>
-
+#include <stdio.h>
 int evaluate(struct link *curr_link) {
   int position = 0;
 	int iterations = 0;	// keep track of loop iterations, we do not wan to exceed LOOP_LIMIT
@@ -20,7 +20,7 @@ int evaluate(struct link *curr_link) {
 }
 
 struct node* create_morse_tree() {
-  char alphabet[29] = {NULL,'e','t','i','a','n','m','s','u','r','w','d','k','g','o','h','v','f','A','l','A','p','j','b','x','c','y','z','q'};
+  char alphabet[29] = {'A','e','t','i','a','n','m','s','u','r','w','d','k','g','o','h','v','f','A','l','A','p','j','b','x','c','y','z','q'};
 
   struct node *tree_head = malloc(sizeof(struct node)); 
 
