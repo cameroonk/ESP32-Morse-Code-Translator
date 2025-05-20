@@ -2,6 +2,6 @@ CC=gcc
 CFLAGS=-g
 OBJ=tests.o
 
-make_tests: tests.o
-		 $(CC) -o exec_tests tests.o
+make_tests: ../tree.c tests.c
+		 $(CC) -I ../. -o exec_tests ../tree.c tests.c
 

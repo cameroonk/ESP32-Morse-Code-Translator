@@ -1,6 +1,24 @@
 #include "tree.h"
 #include <stdlib.h>
 
+int evaluate(struct link *curr_link) {
+  int position = 0;
+	int iterations = 0;	// keep track of loop iterations, we do not wan to exceed LOOP_LIMIT
+  while(curr_link != NULL && iterations < LOOP_LIMIT){
+    if(curr_link->data == DOT) {
+     	printf("Left"); 
+			position = (2 * position) + 1;
+    }
+    else if(curr_link->data == DASH){
+      position = (2 * position) + 2;
+     	printf("Right"); 
+    }
+		curr_link = curr_link->next;
+		iterations++;
+  }
+  return position;
+}
+
 struct node* create_morse_tree() {
   char alphabet[29] = {NULL,'e','t','i','a','n','m','s','u','r','w','d','k','g','o','h','v','f','A','l','A','p','j','b','x','c','y','z','q'};
 
@@ -12,7 +30,7 @@ struct node* create_morse_tree() {
 
 void populate_node(struct node* curr_node, char alphabet[], int letter, int level) {
 	//TODO: make level pointer
-	//we've gone too deep
+	//we've gone too deep please work ???
 	if(level > 5) {
 		return;
 	}
@@ -22,7 +40,7 @@ void populate_node(struct node* curr_node, char alphabet[], int letter, int leve
 
  	curr_node->left = malloc(sizeof(struct node)); 
 	curr_node->right = malloc(sizeof(struct node)); 
-	populate_node(curr_node->left, alphabet, (letter + 1), (level + 1));
-	populate_node(curr_node->right, alphabet, (letter + 2), (level + 1));
+	populate_node(curr_node->left, alphabet, (2*letter + 1), (level + 1));
+	populate_node(curr_node->right, alphabet, (2*letter + 2), (level + 1));
 	
 }
