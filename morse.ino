@@ -16,7 +16,6 @@ void setup() {
   pinMode(DOT_BUTTON, INPUT);
   pinMode(DASH_BUTTON, INPUT);
 	pinMode(LED, OUTPUT);
-
 	Serial.begin(9600);
 	delay(500); 
 }
@@ -26,9 +25,9 @@ void loop() {
 //	buttonState = digitalRead(DOT_BUTTON);
 
 	int iterations = 0;
-	
+	int iter = 0;
 	struct link *curr_link = head;
-	while(iterations < 100000000000) {
+	while(iter < 100000) {
 		curr_link->next=NULL;	// this will make sure that if we do not read any input the evaluation will automatically terminate after this node
 				
 		//read input
@@ -43,7 +42,7 @@ void loop() {
 			
 			delay(200);
 			Serial.print("DOT->");
-			iterations = 0;	
+			iter = 0;	
 			continue;
 		}
 		//if long add right	
@@ -56,15 +55,15 @@ void loop() {
 
 			delay(200);
 			Serial.print("DASH->");
-			iterations = 0;	
+			iter = 0;	
 			continue;	
 		}
 
 		//MAKE SURE TO MAKE LAST NODE->NEXT NULL TO AVOID INFINITE LOOP		
-		iterations++;
+		iter++;
 	}
 	Serial.println("END\n");	
 	int result = evaluate(head);
 //	Serial.println("%c...", alphabet[result]);
-	free(head);	// wonderful
+//	free(head);	// wonderful
 }
