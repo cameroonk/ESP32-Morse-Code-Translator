@@ -59,7 +59,6 @@ void loop() {
 			}	
 		}
 
-		//MAKE SURE TO MAKE LAST NODE->NEXT NULL TO AVOID INFINITE LOOP		
 		iter++;
 	}
 	curr_link->next=NULL;	// this will make sure that if we do not read any input the evaluation will automatically terminate after this node
@@ -72,5 +71,4 @@ void loop() {
 	Serial.println("END\n");	
 	int result = evaluate(head);
 	Serial.println(alphabet[result]);
-//	free(head);	// wonderful
 }
