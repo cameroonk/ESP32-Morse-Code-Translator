@@ -28,32 +28,32 @@ void loop() {
 	while(iter < 1000000) {	
 		//read the input
 		if(digitalRead(BUTTON) == LOW) {	// could be dash or dot
-			delay(10000);	// delay to check if dash
+			delay(500);	// delay to check if dash
 			/**
 			*	If the button is still held down after a delay -> dash
 			* If the button was lifted during the delay -> dot
 			*/
-			if(digitalRead(BUTTON == LOW)) {
-				curr_link->data = DASH;
+			if(digitalRead(BUTTON == HIGH)) {
+				curr_link->data = DOT;
 				curr_link->next = (struct link*)malloc(sizeof(struct link)); 
 				curr_link = curr_link->next;
 			
 				digitalWrite(LED,HIGH);		
 
 				delay(200);
-				Serial.print("DASH->");
+				Serial.print("DOT->");
 				iter = 0;	
 				continue;
 			}
 			else {	// DOT
-				curr_link->data = DOT;
+				curr_link->data = DASH;
         curr_link->next = (struct link*)malloc(sizeof(struct link));
         curr_link = curr_link->next;
       
         digitalWrite(LED,LOW); 
 
         delay(200);
-        Serial.print("DOT->");
+        Serial.print("DASH->");
         iter = 0;
         continue;
 			}	
