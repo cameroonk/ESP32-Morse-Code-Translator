@@ -21,37 +21,22 @@ void setup() {
 }
 
 
-void loop() {
-//	buttonState = digitalRead(DOT_BUTTON);
-
-	int iterations = 0;
+void loop() {	
+	head->data = INVALID;
 	int iter = 0;
 	struct link *curr_link = head;
-	while(iter < 100000) {
-		curr_link->next=NULL;	// this will make sure that if we do not read any input the evaluation will automatically terminate after this node
-				
+	
+	while(iter < 1000000) {	
 		//read input
 		//
 		//if short add left
-		if(digitalRead(DOT_BUTTON) == HIGH && 0) {
-			curr_link->data = DOT;
-			curr_link->next = (struct link*)malloc(sizeof(struct link));	// add another node to the linked list to add direction to next cycle
-      curr_link = curr_link->next;
-			
-			digitalWrite(LED,HIGH);		
-			
-			delay(200);
-			Serial.print("DOT->");
-			iter = 0;	
-			continue;
-		}
 		//if long add right	
 		if(digitalRead(DASH_BUTTON) == LOW) {
 			curr_link->data = DASH;
 			curr_link->next = (struct link*)malloc(sizeof(struct link)); 
 			curr_link = curr_link->next;
 			
-			digitalWrite(LED,LOW);		
+			digitalWrite(LED,HIGH);		
 
 			delay(200);
 			Serial.print("DASH->");
@@ -62,8 +47,9 @@ void loop() {
 		//MAKE SURE TO MAKE LAST NODE->NEXT NULL TO AVOID INFINITE LOOP		
 		iter++;
 	}
+		curr_link->next=NULL;	// this will make sure that if we do not read any input the evaluation will automatically terminate after this node
 	Serial.println("END\n");	
 	int result = evaluate(head);
-//	Serial.println("%c...", alphabet[result]);
+	Serial.println(alphabet[result]);
 //	free(head);	// wonderful
 }

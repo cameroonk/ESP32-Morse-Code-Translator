@@ -1,7 +1,7 @@
 #define LOOP_LIMIT 6 
-
+#define PLACEHOLDER A
 enum signal {
-  DOT, DASH
+  INVALID, DOT, DASH	//invalid needed for linked lists that are made but do not actually go anywhere
 };
 
 struct node {
