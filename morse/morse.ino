@@ -1,3 +1,8 @@
+/**
+* TODO: need to do buffer overflow detection when the amount of dots / dashes exceeds the bounds of the tree
+* OR alternatively when an overflow occurs just start reading the next letter
+*/
+
 #include <Arduino.h>
 #include "tree.h"
 #include <stdlib.h>
@@ -39,13 +44,25 @@ void loop() {
 	head->data = INVALID;																							// without any dots / dashes this linked list is invalid
 	int iter = 0;																											// iterations counter for inner (letter) loop
 	struct link *curr_link = head;																		// create a pointer b/c each letter loop iteration will be pointing to a new link
-	
+
+
+	/**
+	* TODO: All of this logic can be cleaned up
+	* There is a lot of redundant computations on each iterations
+	*/	
 	while(iter < LETTER_WINDOW) {	
 		pressed = 0;	// button has not been pressed for this iteration yet	
+    digitalWrite(LED,LOW); 
 		
-		button_down = millis();															// record button down time
-		while(digitalRead(BUTTON) == LOW) {	pressed = 1; }	// wait until button released
-		button_up = millis();																// record button release time
+		button_down = millis();	// record button down time
+		while(digitalRead(BUTTON) == LOW) {	
+			pressed = 1;	// wait until button released
+			button_up = millis();	// record button release time
+			
+			if(button_up - button_down == DASH_TIME) { 
+				digitalWrite(LED,HIGH);	// light blink indicating time for dash has been reached	
+			}
+		}
 		
 		//dont bother seeing if dash or dot if not pressed
 		if(!pressed) { 
@@ -58,7 +75,6 @@ void loop() {
 			curr_link->data = DOT;																				// add dot to linked list
 			curr_link->next = (struct link*)malloc(sizeof(struct link));	// create new node attached to end
 			curr_link = curr_link->next;																	// move to next link for next iteration
-			digitalWrite(LED,HIGH);	// light blink for dot
 			Serial.print("*");		
 			iter = 0;	// reset iteration timer to allow for more time to wait for next dot / dash
 			continue;	// move to next iteration to poll for next dot / dash
@@ -68,8 +84,8 @@ void loop() {
       curr_link->next = (struct link*)malloc(sizeof(struct link));
       curr_link = curr_link->next;
      
-      digitalWrite(LED,LOW); 
-      Serial.print("-");
+      delay(100);
+			Serial.print("-");
       iter = 0;
 			continue;
 		}
@@ -83,7 +99,7 @@ void loop() {
 		return;
 	}
 	
-	Serial.print("END\n");	
+	Serial.print("|\n");	
 	int result = evaluate(head);
 	Serial.println(alphabet[result]);
 }
