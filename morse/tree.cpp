@@ -19,7 +19,6 @@ int evaluate(struct link *curr_link) {
     }
     else if(curr_link->data == DASH){
       position = (2 * position) + 2;
-     	printf("Right"); 
     }
 		//need to free this link
 		curr_link->data = INVALID;	// make sure if we accidentally access this memory space we do not evaluate this "list" again
