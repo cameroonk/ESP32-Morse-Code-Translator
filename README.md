@@ -18,6 +18,8 @@ As stated above, morse code can be read in a binary tree, so the alphabet needed
 
 ### Functions
 #### Loop
-	Each loop creates sets the  _position_ variable to 0. This position will represent our position in the binary tree taht represents our morse code alphabet, seen above.
-	The main loop running on the ESP32 begins a nested while loop that will run for a pre-determined _LETTER_WINDOW_ amount of iterations. If an input is given on the button, the time it is pressed is noted and a while loop begins to stall the program until the button is released, upon which the time is noted again. The length of time the button was held down is evaluated to determine if it was held for _DASH_TIME_ ms. If it was held for less than _DASH_TIME_, it was a DOT, and _position_ is set to ( (2 * _position_) + 1 ). If the the button was held for sufficient amount of time, we calculate a DASH and move position to ( (2 * _position_) + 2). Either way, the iterations counter is reset to 0 to allow for another DASH or DOT. 
-	Once no input is received for long enough, the inner loop exits, and the _position_'th letter in our binary tree array is displayed. Then the loop repeats and waits for another input.
+Each loop creates sets the  _position_ variable to 0. This position will represent our position in the binary tree taht represents our morse code alphabet, seen above.
+
+The main loop running on the ESP32 begins a nested while loop that will run for a pre-determined _LETTER_WINDOW_ amount of iterations. If an input is given on the button, the time it is pressed is noted and a while loop begins to stall the program until the button is released, upon which the time is noted again. The length of time the button was held down is evaluated to determine if it was held for _DASH_TIME_ ms. If it was held for less than _DASH_TIME_, it was a DOT, and _position_ is set to ( (2 * _position_) + 1 ). If the the button was held for sufficient amount of time, we calculate a DASH and move position to ( (2 * _position_) + 2). Either way, the iterations counter is reset to 0 to allow for another DASH or DOT. 
+
+Once no input is received for long enough, the inner loop exits, and the _position_'th letter in our binary tree array is displayed. Then the loop repeats and waits for another input.
