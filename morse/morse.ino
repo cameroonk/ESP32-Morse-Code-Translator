@@ -44,7 +44,7 @@ void loop() {
 	head->data = INVALID;																							// without any dots / dashes this linked list is invalid
 	int iter = 0;																											// iterations counter for inner (letter) loop
 	struct link *curr_link = head;																		// create a pointer b/c each letter loop iteration will be pointing to a new link
-
+	int position = 0;
 
 	/**
 	* TODO: All of this logic can be cleaned up
@@ -72,17 +72,19 @@ void loop() {
 		
 		//if button was held for more than DASH_TIME -> dash
 		if(button_up - button_down < DASH_TIME) {
-			curr_link->data = DOT;																				// add dot to linked list
-			curr_link->next = (struct link*)malloc(sizeof(struct link));	// create new node attached to end
-			curr_link = curr_link->next;																	// move to next link for next iteration
+			//curr_link->data = DOT;																				// add dot to linked list
+			//curr_link->next = (struct link*)malloc(sizeof(struct link));	// create new node attached to end
+			//curr_link = curr_link->next;																	// move to next link for next iteration
+			position = (2 * position) + 1;
 			Serial.print("*");		
 			iter = 0;	// reset iteration timer to allow for more time to wait for next dot / dash
 			continue;	// move to next iteration to poll for next dot / dash
 		}
 		else {	// DASH // same process as above
-			curr_link->data = DASH;
-      curr_link->next = (struct link*)malloc(sizeof(struct link));
-      curr_link = curr_link->next;
+			//curr_link->data = DASH;
+      //curr_link->next = (struct link*)malloc(sizeof(struct link));
+      //curr_link = curr_link->next;
+			position = (2 * position) + 2;
      
       delay(100);
 			Serial.print("-");
@@ -92,14 +94,17 @@ void loop() {
 				
 		iter++;	
 	}
-	curr_link->next=NULL;	// this will make sure that if we do not read any input the evaluation will automatically terminate after this node
+//	curr_link->next=NULL;	// this will make sure that if we do not read any input the evaluation will automatically terminate after this node
 	
 	//do not want to print anything if no signal was read
-	if(head->data == INVALID) {
+/**	if(head->data == INVALID) {
 		return;
 	}
-	
+*/
+	if(position < 1) {
+		return;
+	}
 	Serial.print("|\n");	
-	int result = evaluate(head);
-	Serial.println(alphabet[result]);
+//	int result = evaluate(head);
+	Serial.println(alphabet[position]);
 }
